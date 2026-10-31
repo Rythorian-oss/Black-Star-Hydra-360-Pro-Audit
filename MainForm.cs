@@ -114,22 +114,22 @@ public class MainForm : Form
         };
         StyleTabControl();
 
-        // ── AUDIT TAB ──────────────────────────────────
+        // AUDIT TAB 
         var auditTab = new TabPage("🔍 Audit");
         BuildAuditTab(auditTab);
         _tabControl.TabPages.Add(auditTab);
 
-        // ── REPAIR TAB ──────────────────────────────────
+        // REPAIR TAB 
         var repairTab = new TabPage("🔧 Repair & Rollback");
         BuildRepairTab(repairTab);
         _tabControl.TabPages.Add(repairTab);
 
-        // ── REFACTOR TAB ────────────────────────────────
+        // REFACTOR TAB 
         var refactorTab = new TabPage("🏗 Refactor");
         BuildRefactorTab(refactorTab);
         _tabControl.TabPages.Add(refactorTab);
 
-        // ── CONSOLE TAB ────────────────────────────────
+        // CONSOLE TAB 
         var consoleTab = new TabPage("📊 Console");
         BuildConsoleTab(consoleTab);
         _tabControl.TabPages.Add(consoleTab);
@@ -338,7 +338,7 @@ public class MainForm : Form
         tab.Controls.Add(btnClear);
     }
 
-    // ── Event Wiring ──────────────────────────────────
+    // Event Wiring 
 
     private void SetupEvents()
     {
@@ -416,7 +416,7 @@ public class MainForm : Form
         }
     }
 
-    // ── Audit ──────────────────────────────────────────
+    // Audit 
 
     private void OnBrowseAudit(object? sender, EventArgs e)
     {
@@ -542,7 +542,7 @@ public class MainForm : Form
         }
     }
 
-    // ── Repair ─────────────────────────────────────────
+    // Repair 
 
     private async void OnFixAll(object? sender, EventArgs e)
     {
@@ -640,8 +640,7 @@ public class MainForm : Form
             MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
-    // ── Refactor ───────────────────────────────────────
-
+    // Refactor 
     private void OnBrowseRefactor(object? sender, EventArgs e)
     {
         using var dialog = new FolderBrowserDialog
@@ -699,8 +698,7 @@ public class MainForm : Form
         }
     }
 
-    // ── Cleanup ────────────────────────────────────────
-
+    // Cleanup 
     private void OnFormClosing(object? sender, FormClosingEventArgs e)
     {
         AppLogger.LogEmitted -= OnLogEmitted;
