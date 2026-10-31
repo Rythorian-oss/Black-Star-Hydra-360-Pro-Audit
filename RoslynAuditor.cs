@@ -33,22 +33,16 @@ public sealed class RoslynAuditor : IDisposable
                 var tree = CSharpSyntaxTree.ParseText(code, cancellationToken: ct);
                 var root = tree.GetRoot(ct);
 
-                // 1. SEC101: String literal assigned to password/secret/token variable
                 CheckHardcodedSecrets(root, filePath, issues);
 
-                // 2. QUAL101: Empty catch blocks (AST-confirmed, not regex)
                 CheckEmptyCatchBlocks(root, filePath, issues);
 
-                // 3. LEAK101: IDisposable without proper Dispose pattern
                 CheckMissingDisposePattern(root, filePath, issues);
 
-                // 4. QUAL103: Async void methods (fire-and-forget is dangerous)
                 CheckAsyncVoidMethods(root, filePath, issues);
 
-                // 5. QUAL104: Public fields (should be properties)
                 CheckPublicFields(root, filePath, issues);
 
-                // 6. LEAK002: Timer created but not stored in a field (likely not disposed)
                 CheckOrphanTimers(root, filePath, issues);
 
                 foreach (var issue in issues)
@@ -276,7 +270,7 @@ public sealed class RoslynAuditor : IDisposable
             var typeName = creation.Type.ToString();
             if (typeName.EndsWith("Timer") || typeName.EndsWith("System.Windows.Forms.Timer"))
             {
-                // Check if assigned to a variable/field, not just new Timer() { ... }
+                // Check if assigned to a variable/field, not just new Timer.
                 if (creation.Parent is not AssignmentExpressionSyntax &&
                     creation.Parent is not VariableDeclaratorSyntax)
                 {
