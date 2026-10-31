@@ -73,7 +73,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
         sb.AppendLine($"   Mode: {(whatIf ? "DRY RUN (WhatIf)" : "LIVE")}");
         sb.AppendLine();
 
-        // Phase 1: Backup
+        // Backup
         progress?.Report(new RefactorProgress { Phase = "Backup", Message = "Creating safety backup..." });
         if (!whatIf)
         {
@@ -85,7 +85,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
             sb.AppendLine("📦 [WhatIf] Would create backup");
         }
 
-        // Phase 2: Create directory hierarchy
+        // Create directory hierarchy
         progress?.Report(new RefactorProgress { Phase = "Structure", Message = "Building folder hierarchy..." });
         sb.AppendLine("📁 Building new enterprise folder hierarchy...");
         foreach (var newDir in DirectoryMap.Values)
@@ -100,7 +100,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
         }
         sb.AppendLine();
 
-        // Phase 3: Migrate files
+        // Migrate files
         progress?.Report(new RefactorProgress { Phase = "Migration", Message = "Migrating files to new sectors..." });
         sb.AppendLine("🚚 Migrating files...");
         int totalMaps = DirectoryMap.Count;
@@ -144,7 +144,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
         }
         sb.AppendLine();
 
-        // Phase 4: Semantic rewrite
+        // Semantic rewrite
         progress?.Report(new RefactorProgress { Phase = "Rewrite", Message = "Rewriting namespaces and paths..." });
         sb.AppendLine("📝 Rewriting namespaces, XAML paths, and .csproj bindings...");
 
@@ -188,11 +188,11 @@ public sealed class CleanArchitectureRefactor : IDisposable
             string content = File.ReadAllText(file);
             string original = content;
 
-            // 1. Namespace updates
+            // Namespace updates
             foreach (var ns in namespaceUpdates)
                 content = Regex.Replace(content, ns.Key, ns.Value);
 
-            // 2. App.xaml StartupUri
+            // App.xaml StartupUri
             if (Path.GetFileName(file) == "App.xaml")
             {
                 content = content.Replace("StartupUri=\"Views/", "StartupUri=\"Presentation/Views/");
@@ -200,7 +200,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
                     "StartupUri=\"Presentation/Views/MainWindow.xaml\"");
             }
 
-            // 3. .csproj XML path patching
+            // .csproj XML path patching
             if (file.EndsWith(".csproj"))
             {
                 foreach (var map in DirectoryMap)
@@ -215,7 +215,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
                 }
             }
 
-            // 4. XAML ResourceDictionary Source paths
+            // XAML ResourceDictionary Source paths
             if (file.EndsWith(".xaml"))
             {
                 foreach (var map in DirectoryMap)
@@ -234,7 +234,7 @@ public sealed class CleanArchitectureRefactor : IDisposable
         }
         sb.AppendLine();
 
-        // Phase 5: Cleanup
+        // Cleanup
         if (!whatIf)
         {
             progress?.Report(new RefactorProgress { Phase = "Cleanup", Message = "Cleaning up stale directories..." });
