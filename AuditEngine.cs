@@ -50,7 +50,7 @@ public sealed class AuditEngine : IDisposable
                 ? Path.GetDirectoryName(fullTargetPath)!
                 : fullTargetPath;
 
-            // Phase 1: Grep Scout
+            // Grep Scout
             progress?.Report(new AuditProgress { Phase = "Scout", Message = "Running Grep scout scan...", TotalFiles = 0, FilesProcessed = 0, IssuesFound = 0 });
             AppLogger.Info($"Phase 1: Grep scout scan on {scanPath}");
 
@@ -70,7 +70,7 @@ public sealed class AuditEngine : IDisposable
                 : await _grepAuditor.ScanDirectoryAsync(scanPath, mode, grepProgress, ct);
             result.Issues.AddRange(grepIssues);
 
-            // Phase 2: Roslyn semantic analysis (skip in Fast mode)
+            // Roslyn semantic analysis (skip in Fast mode)
             if (mode != AuditMode.Fast)
             {
                 progress?.Report(new AuditProgress
