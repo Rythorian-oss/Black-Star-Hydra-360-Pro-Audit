@@ -6,8 +6,6 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <SupportedOSPlatform>Windows</SupportedOSPlatform>
-    <!-- The project is intentionally Windows-only; CA1416 is emitted only
-         because verification is performed on a non-Windows host. -->
     <NoWarn>$(NoWarn);CA1416</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
